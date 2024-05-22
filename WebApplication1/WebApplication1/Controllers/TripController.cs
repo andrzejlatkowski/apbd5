@@ -53,4 +53,25 @@ public class TripController: ControllerBase
             .ToListAsync();
         return Ok(trips);
     }
+
+    [HttpDelete("{idClient}")]
+    public async Task<IActionResult> DeleteClientAsync(int idClient)
+    {
+        var client = await _context.Clients.FindAsync(idClient);
+        if (client == null)
+        {
+            return NotFound("Client not found");
+        }
+
+        var hasTrips = await _context.ClientTrips.AnyAsync(ct => ct.IdClient == idClient);
+        if (hasTrips)
+        {
+            return BadRequest("Client has trips assigned");
+        }
+        
+        _context.Clients.Remove(client);
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
 }
