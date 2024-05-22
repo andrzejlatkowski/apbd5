@@ -23,9 +23,10 @@ public class TripController: ControllerBase
     {
         var trips = await _context.Trips
             .Include(t => t.ClientTrips)
-            .ThenInclude(ct => ct.IdClientNavigation)
+                .ThenInclude(ct => ct.IdClientNavigation)
             .Include(t => t.IdCountries)
-            .ThenInclude(ct => ct.IdTrips)
+                .ThenInclude(ct => ct.IdTrips)
+            .OrderByDescending(t=>t.DateFrom)
             .Select(t => new TripDTO()
             {
                 IdTrip = t.IdTrip,
@@ -40,13 +41,16 @@ public class TripController: ControllerBase
                     IdTrip = ct.IdTrip,
                     RegisteredAt = ct.RegisteredAt,
                     PaymentDate = ct.PaymentDate
-                }).ToList(),
+                })
+                    .ToList(),
                 Country = t.IdCountries.Select(c => new CountryDTO()
                 {
                     IdCountry = c.IdCountry,
                     Name = c.Name
                 }).ToList()
-            }).ToListAsync();
+            })
+            
+            .ToListAsync();
         return Ok(trips);
     }
 }
