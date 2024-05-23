@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using WebApplication1.Context;
 using WebApplication1.DTOs;
 using WebApplication1.Models;
@@ -77,7 +76,7 @@ public class TripController: ControllerBase
     }
 
     [HttpPost("{idTrip}/clients")]
-    public async Task<IActionResult> AddClientToTrip(int idTrip, ClientTripAssignmentDTO request)
+    public async Task<IActionResult> AddClientToTrip(int idTrip, [FromBody] ClientTripAssignmentDTO request)
     {
         var client = await _context.Clients.FirstOrDefaultAsync(c => c.Pesel == request.Pesel);
         if (client == null)

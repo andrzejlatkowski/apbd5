@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebApplication1.Models;
+﻿namespace WebApplication1.Models;
 
 public partial class Country
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebApplication1.Models;
+﻿namespace WebApplication1.Models;
 
 public partial class ClientTrip
 {
@@ -11,7 +8,7 @@ public partial class ClientTrip
 
     public DateTime RegisteredAt { get; set; }
 
-    public DateTime PaymentDate { get; set; }
+    public DateTime? PaymentDate { get; set; } = null!;
 
     public virtual Client IdClientNavigation { get; set; } = null!;
 
